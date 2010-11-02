@@ -97,10 +97,6 @@ If TAIL contains a rooted path element, any preceding elements are discarded"
    paths nil
    ))
           
-(defvar elhome-loaded-files nil
-  "A list of the files loaded by elhome-load-once-optimized"
-  )
-
 ;; Do the work
 (elhome-init)
 (provide 'elhome)
