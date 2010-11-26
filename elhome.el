@@ -12,8 +12,8 @@
 ;; are stored (see elhome-directory below for example) you can load it
 ;; from your .emacs after setting up some constants.
 
-;; I would rather call this module ElHombre, but can't find a good
-;; excuse.
+;; *** IMPORTANT NOTE ***: I would rather call this module ElHombre,
+;; but can't find a good excuse.
 
 ;; Author: Dave Abrahams <dave@boostpro.com>
 ;; Created:  2010-11-02
