@@ -27,6 +27,12 @@
 
 ;;; Code:
 
+(defgroup elhome nil
+  "Modular elisp home configuration")
+
+(defconst elhome-initial-load-path load-path 
+  "The load path as it was before elhome modified it")
+
 ;; top-level function that does all the work.
 (defun elhome-init ()
   (unless (boundp 'elhome-directory)
@@ -37,10 +43,30 @@
 Defaults to `~/.emacs.d/elhome/', unless you set it in your .emacs first"
     )
 
-  ;; load up all the startup.d files
+  (unless (boundp 'elhome-settings-directory)
+    (defconst elhome-settings-directory
+      (file-name-as-directory
+       (elhome-path-join elhome-directory "etc")))
+    "Directory name where customizations are stored.
+Defaults to elhome-directory/`etc/', unless you set it in your .emacs first"
+    )
+
+  ;; Add to the load path the directory of any elisp below the
+  ;; lib/ subdirectory of elhome-directory
+  (setq load-path (elhome-add-subdirs-containing 
+                   (elhome-path-join elhome-directory "lib")
+                   elhome-load-suffix-regexp elhome-initial-load-path))
+
+  (setq custom-file (elhome-path-join elhome-settings-directory "settings.el"))
+
+  (if (file-exists-p custom-file)
+      (load (elhome-strip-lisp-suffix custom-file)))
+
+  ;; load up all the init.d files
   (mapc 'load 
         (elhome-directory-elisp
-         (elhome-path-join elhome-directory "startup.d")))
+         (elhome-path-join elhome-directory "init.d")))
+
   )
 
 (defun elhome-foldl (func seq init)
@@ -56,7 +82,7 @@ Defaults to `~/.emacs.d/elhome/', unless you set it in your .emacs first"
     (funcall func (car seq)
              (elhome-foldr func (cdr seq) init) )))
 
-(defun elhome-join (strings &optional sep)
+(defun elhome-string-join (strings &optional sep)
   "Concatenate the given STRINGS, separated by SEP
 If SEP is not supplied, it defaults to the empty string."
   (setq sep (or sep ""))
@@ -66,7 +92,7 @@ If SEP is not supplied, it defaults to the empty string."
           strings nil )))
    
 (defconst elhome-load-suffix-regexp
-  (concat (elhome-join (mapcar 'regexp-quote (get-load-suffixes)) "\\|") "\\'"))
+  (concat (elhome-string-join (mapcar 'regexp-quote (get-load-suffixes)) "\\|") "\\'"))
 
 (defun elhome-unique (seq)
   "eliminate adjacent duplicates, as determined by equal, from seq"
@@ -75,18 +101,31 @@ If SEP is not supplied, it defaults to the empty string."
                      r (cons e r)))
    seq nil))
 
+(defun elhome-strip-lisp-suffix (path)
+  (replace-regexp-in-string elhome-load-suffix-regexp "" path))
+
 (defun elhome-directory-elisp (directory)
-  "Return a list of all the elisp files in DIRECTORY, sans extension, without duplicates"
+  "Return a sorted list of all the elisp files in DIRECTORY, sans extension, without duplicates.
+Thus, if DIRECTORY contains both foo.el and foo.elc, \"foo\" will appear once in the list"
   (and (file-directory-p directory)
        (elhome-unique
         (mapcar
-         (lambda (path)
-           (replace-regexp-in-string elhome-load-suffix-regexp "" path))
+         'elhome-strip-lisp-suffix
          (directory-files directory t elhome-load-suffix-regexp)))))
+
+(defun elhome-add-subdirs-containing (root pattern subdirs)
+  "Prepend to SUBDIRS the directories including and below ROOT containing files whose names match PATTERN"
+  (dolist (f (directory-files root t) subdirs)
+    (if (file-directory-p f)
+        (unless (member (file-relative-name f root) '("." ".."))
+          (setq subdirs (elhome-add-subdirs-containing f pattern subdirs)))
+      (if (string-match pattern f)
+          (add-to-list 'subdirs (file-name-directory f)))))
+  )
 
 (defun elhome-path-join (&rest paths)
   "Assemble a filesystem path from path elements in HEAD and (optional) TAIL.
-If TAIL contains a rooted path element, any preceding elements are discarded"
+If TAIL contains a rooted path element, any preceding elements are discarded."
   (elhome-foldr
    (lambda (e path)
      (if path
