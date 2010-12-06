@@ -115,7 +115,7 @@ Thus, if DIRECTORY contains both foo.el and foo.elc, \"foo\" will appear once in
 
 (defun elhome-add-subdirs-containing (root pattern subdirs)
   "Prepend to SUBDIRS the directories including and below ROOT containing files whose names match PATTERN"
-  (dolist (f (directory-files root t) subdirs)
+  (dolist (f (if (file-directory-p root) (directory-files root t) nil) subdirs)
     (if (file-directory-p f)
         (unless (member (file-relative-name f root) '("." ".."))
           (setq subdirs (elhome-add-subdirs-containing f pattern subdirs)))
