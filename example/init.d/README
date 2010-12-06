@@ -1,0 +1,2 @@
+This directory contains files that are loaded at the *very beginning*
+of the startup process.

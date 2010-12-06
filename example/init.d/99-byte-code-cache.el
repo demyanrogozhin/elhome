@@ -1,0 +1,1 @@
+(require 'byte-code-cache)
