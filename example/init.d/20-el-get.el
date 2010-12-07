@@ -10,11 +10,10 @@
      (require 'bytecomp)
 
      ;; Find the installer page
-     (save-excursion
-       (set-buffer 
-        ;; (url-retrieve-synchronously "https://github.com/dimitri/el-get/raw/master/el-get-install.el")
-        (url-retrieve-synchronously "https://github.com/dabrahams/el-get/raw/master/el-get-install.el")
-        )
+     (with-current-buffer
+         (url-retrieve-synchronously 
+         ;; "https://github.com/dimitri/el-get/raw/master/el-get-install.el" ;; official repo
+         "https://github.com/dabrahams/el-get/raw/master/el-get-install.el") ;; personal clone
 
        ;; Evaluate it to install el-get
        (end-of-buffer)
