@@ -92,7 +92,7 @@ If SEP is not supplied, it defaults to the empty string."
           strings nil )))
    
 (defconst elhome-load-suffix-regexp
-  (concat (elhome-string-join (mapcar 'regexp-quote (get-load-suffixes)) "\\|") "\\'"))
+  (concat (mapconcat 'regexp-quote (get-load-suffixes) "\\|") "\\'"))
 
 (defun elhome-unique (seq)
   "eliminate adjacent duplicates, as determined by equal, from seq"
