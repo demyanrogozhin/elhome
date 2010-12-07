@@ -23,8 +23,8 @@
      (while (not (featurep 'el-get)) (sleep-for 0 100))
      (setq el-get-newly-installed t)))
 
-  ;; Register my locally-defined el-get recipies
-  (add-to-list 'el-get-recipe-path "~/.emacs.d/elhome/el-get-recipes")
+  ;; My personal recipes are in my personal clone
+  ;; (add-to-list 'el-get-recipe-path "~/.emacs.d/elhome/el-get-recipes")
     
   ;; List the packages I need
   (setq el-get-sources
