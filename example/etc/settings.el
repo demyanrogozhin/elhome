@@ -189,7 +189,6 @@ then sudo on the remote host itself.")
 I never like being nannied by regular browsers either.")
  '(w3m-default-display-inline-images t)
  '(w3m-display-ins-del nil)
- '(w3m-icon-directory "~/elisp/package.d/w3m-el/icons")
  '(w3m-use-cookies t)
  '(warning-suppress-types (quote ((\(undo\ discard-info\)))) nil nil "
 Without this, emacs pops up annoying warnings in, e.g., *shell* buffers
@@ -231,7 +230,6 @@ This has to be on if I want the 'sendlog folder to contain anything
 Don't show me any duplicate messages")
  '(wl-folder-window-width 60)
  '(wl-highlight-folder-by-numbers 1)
- '(wl-icon-directory "~/.emacs.d/3rd-party/package.d/wanderlust/icons/")
  '(wl-interactive-exit nil)
  '(wl-interactive-save-folders nil)
  '(wl-interactive-send nil)
