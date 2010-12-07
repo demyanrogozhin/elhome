@@ -28,7 +28,21 @@
     
   ;; List the packages I need
   (setq el-get-sources
-        '(org-mode apel auto-complete bbdb el-get emacs-w3m flim magit mailcrypt semi wl))
+        '(package
+          org-mode 
+          apel 
+          auto-complete
+          bbdb
+          el-get
+          emacs-w3m
+          flim
+          magit
+          mailcrypt
+          semi
+          wanderlust
+          filladapt
+          flex-mode
+          ))
 
   ;; If this is the first run, run el-get synchronously, to make sure
   ;; we don't miss anything important
