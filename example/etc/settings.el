@@ -12,7 +12,7 @@ Blinking cursor just annoys me")
  '(canlock-password "963afd5a40a33c7f59217100af5a7c1648af74a1")
  '(clang-flags (quote ("-I" "/Users/dave/src/boost-svn-git" "-I" "/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/")))
  '(cursor-type (quote box) t)
- '(default-frame-alist (quote ((font . "Monaco-15"))) nil nil "
+ `(default-frame-alist (quote ((font . ,(if (eq system-type 'darwin)"Monaco-15" "DejaVu Sans Mono-12")))) nil nil "
 On Linux this is really just a way of hanging onto and documenting my
 settings for for default-frame-alist
 
