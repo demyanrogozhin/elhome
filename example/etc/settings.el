@@ -233,6 +233,7 @@ This has to be on if I want the 'sendlog folder to contain anything
 Don't show me any duplicate messages")
  '(wl-folder-window-width 60)
  '(wl-highlight-folder-by-numbers 1)
+ '(wl-icon-directory "~/.emacs.d/el-get/wanderlust/icons/")
  '(wl-interactive-exit nil)
  '(wl-interactive-save-folders nil)
  '(wl-interactive-send nil)
