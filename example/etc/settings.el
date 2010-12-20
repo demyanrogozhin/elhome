@@ -12,41 +12,7 @@ Blinking cursor just annoys me")
  '(canlock-password "963afd5a40a33c7f59217100af5a7c1648af74a1")
  '(clang-flags (quote ("-I" "/Users/dave/src/boost-svn-git" "-I" "/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/")))
  '(cursor-type (quote box) t)
- `(default-frame-alist (quote ((font . ,(if (eq system-type 'darwin)"Monaco-15" "DejaVu Sans Mono-12")))) nil nil "
-On Linux this is really just a way of hanging onto and documenting my
-settings for for default-frame-alist
-
-  '(default-frame-alist (quote ((menu-bar-lines . 1) (font-backend . \"xft\") (font . \"Bitstream Vera Sans Mono-10.5\"))) nil nil \"
-
-which currently aren't needed
-since I have an .Xdefaults file containing:
-
-  Emacs.FontBackend: xft
-  Emacs.font: Bitstream Vera Sans Mono-10.5
-  Emacs.toolBar: 0
-  Emacs.menuBar: 1
-
-Doing it in .Xdefaults prevents the initial window from flashing
-and resizing.
-
-Note that, on ubuntu at least, one must do 
-
-  xrdb -merge ~/.Xdefaults
-
-to get the changes to take effect
-
-Despite what the customize interface says, menu-bar-lines and 
-tool-bar-lines are set to 1 as part of the default value.  
-However, customizing tool-bar-mode to nil sets tool-bar-lines
-to zero here.
-
-According to <http://article.gmane.org/gmane.emacs.devel/99324>, 
-we need to explicitly set the font-backend to XFT or we won't 
-get antialiasing.  
-
-Had to evaluate (x-select-font) to find out the name of the
-font that emacs would recognize.
-")
+ '(custom-theme-directory "~/.emacs.d/elhome/etc")
  '(delete-selection-mode t nil nil "
 Creates normal editor behavior: select a region and begin
 typing, the region is replaced")
