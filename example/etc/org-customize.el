@@ -77,7 +77,7 @@ Wiegleymacs has some pretty long matcher strings
 ")
  '(org-agenda-include-diary t)
  '(org-agenda-fontify-priorities t)
- '(org-agenda-files (quote ("~/Dropbox/todo.txt" "~/Dropbox/Projects")))
+ '(org-agenda-files (quote ("/Users/dave/Dropbox/todo.txt" "/Users/dave/Dropbox/Projects")))
  '(org-agenda-default-appointment-duration 60)
  '(org-agenda-deadline-text "D: ")
  '(org-agenda-deadline-relative-text "D%d: ")
