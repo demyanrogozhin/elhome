@@ -41,6 +41,7 @@
           wanderlust
           filladapt
           flex-mode
+          auto-complete-clang
           ))
 
   ;; If this is the first run, run el-get synchronously, to make sure

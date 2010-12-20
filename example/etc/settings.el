@@ -3,11 +3,14 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(ac-clang-flags (quote ("-I" "/Users/dave/src/boost-svn-git" "-I" "/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/")))
+ '(ac-dictionary-directories (quote ("~/.emacs.d/elhome/ac-dict/")))
  '(backup-directory-alist (quote (("." . "~/.emacs.d/backups"))))
  '(blink-cursor-mode nil nil nil "
 Blinking cursor just annoys me")
  '(c-default-style (quote ((java-mode . "java") (awk-mode . "awk") (other . "bsd"))))
  '(canlock-password "963afd5a40a33c7f59217100af5a7c1648af74a1")
+ '(clang-flags (quote ("-I" "/Users/dave/src/boost-svn-git" "-I" "/opt/local/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/")))
  '(cursor-type (quote box) t)
  '(default-frame-alist (quote ((font . "Monaco-15"))) nil nil "
 On Linux this is really just a way of hanging onto and documenting my
