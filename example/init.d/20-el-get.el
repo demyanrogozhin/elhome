@@ -51,7 +51,5 @@
 
 ;; Others
                ;; color-theme
-               ;; mailcrypt
                ;; markdown-mode
-               ;; org-mode
                ;; worklog
