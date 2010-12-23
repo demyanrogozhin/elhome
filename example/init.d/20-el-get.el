@@ -13,7 +13,7 @@
      (with-current-buffer
          (url-retrieve-synchronously 
          ;; "https://github.com/dimitri/el-get/raw/master/el-get-install.el" ;; official repo
-         "https://github.com/dabrahams/el-get/raw/master/el-get-install.el") ;; personal clone
+         "https://github.com/dabrahams/el-get/raw/t/dev/el-get-install.el") ;; personal clone
 
        ;; Evaluate it to install el-get
        (end-of-buffer)
