@@ -1,6 +1,10 @@
 ; initsplit-customizations-alist, which stores the identity of all the
 ; split customization files, is only available once we load initsplit.
-(require 'initsplit)
+(let ((load-path 
+       (cons 
+        (elhome-path-join (file-name-directory (directory-file-name elhome-directory)) "el-get" "initsplit")
+        load-path)))
+  (require 'initsplit))
 
 ;; Load up all the split customization files with the elhome settings
 ;; directory in the load path so initsplit-customizations-alist can
@@ -31,7 +35,7 @@
 ;; customizations.  To create a set of customizations that applies
 ;; when (eq system-type 'darwin), just create a theme called
 ;; "system-type-darwin".  See
-;; [[info:emacs:Custom%20Themes][info:emacs:Custom Themes]] for mre on
+;; [[info:emacs:Custom%20Themes][info:emacs:Custom Themes]] for more on
 ;; themes.
 (dolist (x '(type name))
   (let* ((var-name (concat "system-" (symbol-name x))) 

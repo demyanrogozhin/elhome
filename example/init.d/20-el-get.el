@@ -42,6 +42,13 @@
           filladapt
           flex-mode
           auto-complete-clang
+
+          (:name initsplit
+                 :type http
+                 :url "https://github.com/dabrahams/elisp/raw/master/elisp/package.d/initsplit.el"
+                 :features (initsplit)
+;                 :after (lambda () (add-hook 'after-save-hook 'initsplit-byte-compile-files t))
+                 )
           ))
 
   ;; If this is the first run, run el-get synchronously, to make sure
