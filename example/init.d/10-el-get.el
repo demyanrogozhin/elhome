@@ -18,8 +18,9 @@
        ;; Evaluate it to install el-get
        (end-of-buffer)
        (eval-last-sexp nil))
-     (message "Waiting for el-get installation to complete...")
-     (while (not (featurep 'el-get)) (sleep-for 0 100))
+
+;;     (message "Waiting for el-get installation to complete...")
+;;     (while (not (featurep 'el-get)) (sleep-for 0 100))
      (setq el-get-newly-installed t)))
 
   ;; My personal recipes are in my personal clone
@@ -28,7 +29,7 @@
   ;; List the packages I need
   (setq el-get-sources
         '(package
-          org-mode 
+          ;;org-mode 
           apel 
           auto-complete
           bbdb
@@ -53,7 +54,11 @@
 
   ;; If this is the first run, run el-get synchronously, to make sure
   ;; we don't miss anything important
-  (if (or t el-get-newly-installed) (el-get 'sync) (el-get)))
+  (if (or t el-get-newly-installed)
+      (progn (switch-to-buffer "*Messages*")
+             (split-window-sensibly)
+             (el-get 'sync) )
+    (el-get)))
 
 (provide 'dwa/packages)
 
