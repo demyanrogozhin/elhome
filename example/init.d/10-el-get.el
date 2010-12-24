@@ -56,7 +56,7 @@
   ;; we don't miss anything important
   (if (or t el-get-newly-installed)
       (progn (switch-to-buffer "*Messages*")
-             (split-window-sensibly)
+             (split-window)
              (el-get 'sync) )
     (el-get)))
 
