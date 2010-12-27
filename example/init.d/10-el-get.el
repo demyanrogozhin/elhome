@@ -29,7 +29,7 @@
   ;; List the packages I need
   (setq el-get-sources
         '(package
-          ;;org-mode 
+          org-mode 
           apel 
           auto-complete
           bbdb
@@ -58,7 +58,7 @@
       (progn (switch-to-buffer "*Messages*")
              (delete-other-windows)
              (end-of-buffer)
-             (el-get 'sync) )
+             (el-get 'wait) )
     (el-get)))
 
 (provide 'dwa/packages)
