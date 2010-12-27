@@ -38,7 +38,7 @@
   (unless (boundp 'elhome-directory)
     (defconst elhome-directory
       (file-name-as-directory
-       (elhome-path-join "~" ".emacs.d" "elhome")))
+       (elhome-path-join user-emacs-directory "elhome")))
     "Directory name where a user's home configuration is stored.
 Defaults to `~/.emacs.d/elhome/', unless you set it in your .emacs first"
     )
