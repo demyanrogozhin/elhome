@@ -4,7 +4,7 @@
 ;; that file.
 (require 'initsplit)
 
-(defcustom "elhome-settings-file-regexp" "\\`\\(.+\\)-settings\\'"
+(defcustom elhome-settings-file-regexp "\\`\\(.+\\)-settings\\'"
   "A regexp used to match files in `elhome-settings-directory'
   that should be automatically loaded and used for customizations
   after a library is loaded.  The first match group names the
@@ -12,6 +12,9 @@
   variables placed there."
   :type 'regexp
   :group 'elhome)
+
+(defun elhome-file-loaded-p (file)
+  (load-history-filename-element (load-history-regexp file)))
 
 (defadvice custom-save-all (around elhome-auto-initsplit
                                    activate compile preactivate)
@@ -23,7 +26,10 @@ customizations whose name begins with \"foobar-\".  Note: depends
 on initsplit!"
   (let* ((settings-files 
           (remove-if-not
-           (lambda (s) (string-match-p settings-regexp s))
+           (lambda (s) (and
+                        (string-match-p elhome-settings-file-regexp s)
+                        (elhome-file-loaded-p (concat elhome-settings-directory s))))
+           
            (mapcar 'file-name-nondirectory 
                    (elhome-directory-elisp elhome-settings-directory))))
 
@@ -37,9 +43,10 @@ on initsplit!"
          ;; the advice `initsplit-custom-save-all'.
          (initsplit-dynamic-customizations-alist
           (mapcar (lambda (f) 
-                    `(,(progn (string-match settings-regexp f)(match-string 1 f))
-                     ,(concat elhome-settings-directory f) nil nil))
-          sorted-files))
+                    `(,(progn (string-match elhome-settings-file-regexp f)
+                              (match-string 1 f))
+                      ,(concat elhome-settings-directory f) nil nil))
+                  sorted-files)))
 
     ad-do-it))
 
@@ -54,12 +61,13 @@ the settings file will be lost."
   :group 'elhome)
 
 (defun elhome-load-settings (abs-file)
-  (let* ((key (file-name-nondirectory (elhome-strip-lisp-suffix abs-file)))
-         (settings-file (concat elhome-settings-directory key "-settings")))
+  (let* ((key           (file-name-nondirectory (elhome-strip-lisp-suffix abs-file)))
+         (settings      (concat elhome-settings-directory key "-settings"))
+         (settings-file (condition-case nil (find-library-name settings) (error nil))))
 
-    (when (and (member settings-file (elhome-directory-elisp elhome-settings-directory))
+    (when (and settings-file
                (or (member key elhome-reloaded-settings-prefixes)
-                   (not (load-history-filename-element (load-history-regexp settings-file)))))
+                   (not (elhome-file-loaded-p settings-file))))
       (load settings-file))))
 
-(add-to-list 'after-load-functions 'elhome-load-settings)
+(add-hook 'after-load-functions 'elhome-load-settings)
