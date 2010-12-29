@@ -95,7 +95,7 @@ If SEP is not supplied, it defaults to the empty string."
   (concat (mapconcat 'regexp-quote (get-load-suffixes) "\\|") "\\'"))
 
 (defun elhome-unique (seq)
-  "eliminate adjacent duplicates, as determined by equal, from seq"
+  "eliminate adjacent duplicates, as determined by equal, from SEQ"
   (elhome-foldr 
    (lambda (e r) (if (and r (equal e (car r)))
                      r (cons e r)))
