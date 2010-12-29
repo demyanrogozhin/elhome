@@ -1,3 +1,4 @@
+(defun org-settings-loaded() (message "yay!"))
 
 (custom-set-variables
  '(org-use-tag-inheritance t)
