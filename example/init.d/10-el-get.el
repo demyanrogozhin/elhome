@@ -47,10 +47,9 @@
           auto-complete-clang
 
           (:name initsplit
-                 :type http
-                 :url "https://github.com/dabrahams/elisp/raw/master/elisp/package.d/initsplit.el"
+                 :type git
+                 :url "git://github.com/dabrahams/initsplit.git"
                  :features (initsplit)
-;                 :after (lambda () (add-hook 'after-save-hook 'initsplit-byte-compile-files t))
                  )
           ))
 
