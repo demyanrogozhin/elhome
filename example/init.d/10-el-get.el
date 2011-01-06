@@ -76,7 +76,8 @@ intern it and return that."
 (defvar dwa/el-get-dependency-alist
     '((wanderlust . (apel flim semi))
       (semi . (flim apel))
-      (flim . (apel)))
+      (flim . (apel))
+      (auto-complete-clang . (auto-complete)))
   "An alist whose keys are symbols representing the names of
 packages and whose values are lists of symbols representing
 packages on which the key depends")
