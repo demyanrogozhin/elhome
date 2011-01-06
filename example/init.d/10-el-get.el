@@ -105,6 +105,22 @@ are now installed"
                (cdr (assoc package dwa/el-get-dependency-alist)))
     (dwa/el-get-demand1 package)))
 
+(defcustom dwa/el-get-standard-packages nil
+  "A list of package names that are part of your
+standard package requirements.  These will be installed and/or
+initialized automatically at startup, as required."
+  :type '(repeat string))
+
+;; Make sure any customizations are saved before exiting.  Should
+;; eventually be replaced by the use of cus-edit+
+(defun dwa/save-customizations-before-exit ()
+  (condition-case err 
+      (progn (customize-unsaved) nil)
+    (error 
+     (or (equal err '(error "No user options are set but unsaved"))
+         (apply 'signal err)))))
+(add-to-list 'kill-emacs-query-functions 'dwa/save-customizations-before-exit)
+
 (defun dwa/el-get-demand (package)
   "Cause the named PACKAGE to be installed asynchronously, after
 all of its dependencies (if any).
@@ -112,8 +128,15 @@ all of its dependencies (if any).
 PACKAGE may be either a string or the corresponding symbol"
   (interactive (list (el-get-read-package-name "Install" t)))
   (let ((p (dwa/as-symbol package)))
+
+    ;; Add the package to our list and make sure customize knows it
+    (unless (member (symbol-name p) dwa/el-get-standard-packages)
+      (add-to-list 'dwa/el-get-standard-packages (symbol-name p))
+      (put 'dwa/el-get-standard-packages
+           'customized-value (list (custom-quote dwa/el-get-standard-packages))))
+
     ;; don't do anything if it's already installed or in progress
-    (unless (gethash package dwa/el-get-package-state)
+    (unless (gethash p dwa/el-get-package-state)
 
       ;; Remember that we're working on it
       (puthash p 'installing dwa/el-get-package-state)
@@ -131,21 +154,5 @@ PACKAGE may be either a string or the corresponding symbol"
         (unless non-installed-dependencies
           (dwa/el-get-demand1 p))))))
 
-(defvar dwa/my-packages
-  '(notify
-    wanderlust
-    package
-    wanderlust
-    org-mode 
-    auto-complete
-    bbdb
-    el-get
-    emacs-w3m
-    magit
-    mailcrypt
-    filladapt
-    flex-mode
-    auto-complete-clang))
-
-(dolist (p dwa/my-packages)
+(dolist (p dwa/el-get-standard-packages)
   (dwa/el-get-demand p))
