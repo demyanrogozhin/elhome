@@ -85,10 +85,13 @@ packages on which the key depends")
 (defun dwa/el-get-package-initialized-p (package)
   (eq (gethash package dwa/el-get-package-state) 'init))
 
-(defun dwa/el-get-force-install (package)
-  "Install the el-get package given by PACKAGE, a symbol"
-  (let ((el-get-sources (list package)))
-    (el-get-install (symbol-name package))))
+(defun dwa/el-get-demand1 (package)
+  "Install, if necessary, and init the el-get package given by
+PACKAGE, a symbol"
+  (let ((p (symbol-name package)))
+    (if (string= (el-get-package-status p) "installed")
+        (el-get-init p)
+      (el-get-install p))))
 
 (defadvice el-get-error-unless-package-p 
   (around dwa/disable-stupid-check (package) activate compile preactivate)
@@ -100,9 +103,9 @@ packages on which the key depends")
 are now installed"
   (when (every 'dwa/el-get-package-initialized-p
                (cdr (assoc package dwa/el-get-dependency-alist)))
-    (dwa/el-get-force-install package)))
+    (dwa/el-get-demand1 package)))
 
-(defun dwa/el-get-install (package)
+(defun dwa/el-get-demand (package)
   "Cause the named PACKAGE to be installed asynchronously, after
 all of its dependencies (if any).
 
@@ -123,10 +126,10 @@ PACKAGE may be either a string or the corresponding symbol"
            (dwa/el-get-event-id dep 'init)
            `(lambda () (dwa/el-get-mark-initialized ',dep)
               (dwa/el-get-dependent-installed ',p)))
-          (dwa/el-get-install dep))
+          (dwa/el-get-demand dep))
 
         (unless non-installed-dependencies
-          (dwa/el-get-force-install p))))))
+          (dwa/el-get-demand1 p))))))
 
 (defvar dwa/my-packages
   '(notify
@@ -145,4 +148,4 @@ PACKAGE may be either a string or the corresponding symbol"
     auto-complete-clang))
 
 (dolist (p dwa/my-packages)
-  (dwa/el-get-install p))
+  (dwa/el-get-demand p))
