@@ -82,6 +82,21 @@ intern it and return that."
 packages and whose values are lists of symbols representing
 packages on which the key depends")
 
+(defun dwa/el-get-dependencies (package)
+  "Return the list of packages (as symbols) on which PACKAGE
+depends"
+  (let ((deps (cdr (assoc package dwa/el-get-dependency-alist))))
+    ;; Make sure all elpa packages depend on the package `package'.
+    ;; The package `package' is an elpa package, though, so exclude
+    ;; it to avoid a circular dependency.
+    (if (and (not (eq package 'package))
+             (eq 'elpa
+                 (plist-get 
+                  (el-get-package-def (symbol-name package)) 
+                  :type)))
+        (cons 'package deps)
+      deps)))
+
 (defun dwa/el-get-package-initialized-p (package)
   (eq (gethash package dwa/el-get-package-state) 'init))
 
@@ -102,7 +117,7 @@ PACKAGE, a symbol"
   "Install the given PACKAGE (a symbol) iff all its dependents
 are now installed"
   (when (every 'dwa/el-get-package-initialized-p
-               (cdr (assoc package dwa/el-get-dependency-alist)))
+               (dwa/el-get-dependencies package))
     (dwa/el-get-demand1 package)))
 
 (defcustom dwa/el-get-standard-packages nil
@@ -127,11 +142,12 @@ all of its dependencies (if any).
 
 PACKAGE may be either a string or the corresponding symbol"
   (interactive (list (el-get-read-package-name "Install" t)))
-  (let ((p (dwa/as-symbol package)))
+  (let* ((p (dwa/as-symbol package))
+         (pname (symbol-name p)))
 
     ;; Add the package to our list and make sure customize knows it
-    (unless (member (symbol-name p) dwa/el-get-standard-packages)
-      (add-to-list 'dwa/el-get-standard-packages (symbol-name p))
+    (unless (member pname dwa/el-get-standard-packages)
+      (add-to-list 'dwa/el-get-standard-packages pname)
       (put 'dwa/el-get-standard-packages
            'customized-value (list (custom-quote dwa/el-get-standard-packages))))
 
@@ -143,7 +159,7 @@ PACKAGE may be either a string or the corresponding symbol"
 
       (let ((non-installed-dependencies
              (remove-if 'dwa/el-get-package-initialized-p
-                        (cdr (assoc p dwa/el-get-dependency-alist)))))
+                        (dwa/el-get-dependencies p))))
         (dolist (dep non-installed-dependencies)
           (dwa/add-event-task 
            (dwa/el-get-event-id dep 'init)
