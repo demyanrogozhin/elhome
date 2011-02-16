@@ -22,20 +22,7 @@ If you don't do this, all the nice navigation stuff is disabled by default.  Who
  '(diff-switches "-du")
  '(dired-listing-switches "-alh" nil nil "
 Added -h so I can read file sizes")
- '(ediff-custom-diff-options "-u" nil nil "
-Show me unified diffs by default")
- '(ediff-highlight-all-diffs nil nil nil "
-only highlight the selected diff (keeps down gray cruft onscreen)")
- '(ediff-keep-variants t nil nil "
-Any unchanged buffers in the ediff are removed when the session ends. 
-`C-u q' to override when quitting.")
- '(ediff-merge-filename-prefix "")
- '(ediff-skip-merge-regions-that-differ-from-default nil)
- '(ediff-split-window-function (quote split-window-horizontally) nil nil "
-Show diffs side-by-side")
- '(ediff-window-setup-function (quote ediff-setup-windows-plain) nil nil "
-Run Ediff all in one frame.  The default when there's a window manager is for
-emacs to pop up a separate frame for the `*Ediff Control Panel*' buffer")
+ '(dwa/el-get-standard-packages (quote ("magit" "semi" "flim" "apel" "wanderlust" "el-get" "initsplit")))
  '(elmo-imap4-default-authenticate-type (quote clear))
  '(elmo-imap4-default-port 993)
  '(elmo-imap4-default-server "imap.gmail.com")
@@ -56,8 +43,6 @@ The default limit is so low that it always asks about messages that would fetch 
  '(erc-sound-mode t)
  '(explicit-bash-args (quote ("--noediting" "-i" "-l")) nil nil "
 added -l so it would take things out of my .bash_profile, like (on boostpro.com) the prompt pattern.  Otherwise I get this abomination: ///bd5882fff11dd5c2900e1ce95b895e66")
- '(explicit-shell-file-name "bash" nil nil "
-Giving an explicit path like /bin/bash (the default from my Linux boxen) fails on FreeBSD where the file doesn't live there.")
  '(ffap-machine-p-known (quote reject) nil nil "
 This hung emacs on my Mac once when pinging.")
  '(ffap-require-prefix t nil nil "
@@ -67,6 +52,22 @@ Invoking ffap without any prefix tends to do things I don't intend.")
 Increased the number of stack frames displayed from 40")
  '(global-auto-revert-mode t nil nil "
 We want our file buffers to stay up-to-date with changes on disk")
+ '(gnus-buttonized-mime-types (quote ("multipart/signed" "multipart/alternative" "application/msword")))
+ '(gnus-extra-headers (quote (To Newsgroups X-Spambayes-Classification Reply-To Message-ID Message-Id)))
+ '(gnus-gravatar-style (quote inline))
+ '(gnus-group-line-format "%M%S%p%P%5y%~(form my-align-gnus-group)@|%B%(%G%)%O
+")
+ '(gnus-ignored-from-addresses "^david.abrahams@rcn.com\\|dave@boost\\(-consulting\\|pro\\).com$")
+ '(gnus-picon-style (quote right))
+ '(gnus-registry-install t)
+ '(gnus-secondary-select-methods (quote ((nnimap "Personal GMail" (nnimap-address "imap.gmail.com") (nnimap-server-port 993) (nnimap-stream ssl)))))
+ '(gnus-select-method (quote (nnimap "BoostPro GMail" (nnimap-address "imap.gmail.com") (nnimap-stream ssl) (nnimap-authenticator login) (nnimap-nov-is-evil t))))
+ '(gnus-summary-ignore-duplicates t)
+ '(gnus-treat-fill-long-lines (quote first) nil nil "
+Some people don't embed linebreaks in their paragraphs; this will force-add them.")
+ '(gnus-treat-from-picon (quote head))
+ '(gnus-treat-mail-picon (quote head))
+ '(gnus-treat-newsgroups-picon (quote head))
  '(gravatar-icon-size 50)
  '(gravatar-retrieval-program "wget -q -O '%s' '%s'" nil nil "
 Requires wget, which isn't on the Mac by default.  Someday should
@@ -77,9 +78,8 @@ from macports.")
  '(imap-shell-program (quote ("dovecot --exec-mail imap")))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
- '(initsplit-customizations-alist (quote (("\\`gnus-" "gnus-customize.el" t) ("\\`\\(org\\|calendar\\|diary\\)-" "org-customize.el" t))))
+ '(initsplit-customizations-alist (quote (("\\`\\(org\\|calendar\\|diary\\)-" "org-setings.el" nil nil))))
  '(ispell-program-name "aspell" t)
- '(magit-git-executable "/opt/local/bin/git")
  '(magit-repo-dirs (quote ("/Users/dave/src" "/Users/dave/work/pipsync")))
  '(magit-repo-dirs-depth 1)
  '(mail-signature t)
@@ -133,6 +133,7 @@ As prescribed by http://www.newartisans.com/2007/08/using-org-mode-as-a-day-plan
  '(server-mode t nil nil "
 Always run a server so we can open files in existing emacs frames.")
  '(show-paren-mode t)
+ '(smtp-server "smtp.gmail.com")
  '(smtpmail-default-smtp-server "www.boostpro.com")
  '(smtpmail-local-domain "boostpro.com")
  '(smtpmail-smtp-service 587)
@@ -169,66 +170,6 @@ where I don't expect it to be keeping undo history anyway")
  '(weblogger-server-username "dave")
  '(weblogger-start-edit-entry-hook (quote ((lambda nil (message-goto-body) (while (search-forward "
 " nil t) (replace-match "" nil t))))))
- '(wl-ask-range nil nil nil "
-The range thing slows me down.  However, I'd still like to know how to force the question.")
- '(wl-auto-check-folder-list (quote ("Inbox")))
- '(wl-auto-check-folder-name "Inbox")
- '(wl-auto-select-next (quote skip-no-unread))
- '(wl-auto-uncheck-folder-list (quote ("\\$.*" "%zz_mairix.*" "%zz_archive.*" "%.*")))
- '(wl-dispose-folder-alist (quote (("^-" . remove) ("^@" . remove) ("\\<All Mail\\>" . trash) ("^%" . remove))) nil nil "
-Only disposing of something in \"All Mail\" should actually move it to
-the trash (GMail will clean that up after 30 days).  Otherwise, we can
-fully delete it from the current folder because we always have a copy
-in \"All Mail.\"
-")
- '(wl-draft-always-delete-myself t)
- '(wl-draft-config-alist (quote (("" (part-bottom . "
-") ("Bcc" . "Dave Abrahams <dave@boostpro.com>") (signature . "~/.signature")))))
- '(wl-draft-reply-buffer-style (quote full))
- '(wl-draft-sendlog-max-size 100000 nil nil "
-Keep more sent messages around for quick/easy access
-")
- '(wl-draft-use-cache t nil nil "
-This has to be on if I want the 'sendlog folder to contain anything
-")
- '(wl-fldmgr-add-complete-with-current-folder-list t)
- '(wl-folder-desktop-name #("Messages" 0 8 (wl-folder-is-group is-group wl-folder-entity-id 0)))
- '(wl-folder-notify-deleted t)
- '(wl-folder-petname-alist (quote (("%INBOX" . "Inbox") ("+drafts" . "Drafts") (#("%[Gmail]/Sent" 0 13 (wl-folder-entity-id 3 wl-folder-is-group nil)) . "Sent") (#("%inbox:\"dave.abrahams@gmail.com\"/clear@imap.gmail.com:993!" 0 58 (wl-folder-entity-id 72 wl-folder-is-group nil)) . "Inbox") (#("%[Gmail]/Trash:\"dave.abrahams@gmail.com\"/clear@imap.gmail.com:993!" 0 66 (wl-folder-entity-id 74 wl-folder-is-group nil)) . "Trash") (#("%[Gmail]/Star:\"dave.abrahams@gmail.com\"/clear@imap.gmail.com:993!" 0 65 (wl-folder-entity-id 75 wl-folder-is-group nil)) . "With a Star") (#("%[Gmail]/Sent:\"dave.abrahams@gmail.com\"/clear@imap.gmail.com:993!" 0 65 (wl-folder-entity-id 76 wl-folder-is-group nil)) . "Sent") (#("%[Gmail]/Draft:\"dave.abrahams@gmail.com\"/clear@imap.gmail.com:993!" 0 66 (wl-folder-entity-id 77 wl-folder-is-group nil)) . "Draft") (#("%[Gmail]/All E-Mails:\"dave.abrahams@gmail.com\"/clear@imap.gmail.com:993!" 0 72 (wl-folder-entity-id 78 wl-folder-is-group nil)) . "All E-Mails") (#("%Org-Mode:\"dave.abrahams@gmail.com\"/clear@imap.gmail.com:993!" 0 61 (wl-folder-entity-id 79 wl-folder-is-group nil)) . "Org-Mode") (#("%[Gmail]/Draft" 0 14 (wl-folder-entity-id 4 wl-folder-is-group nil)) . "Drafts") (#("%[Gmail]/Star" 0 13 (wl-folder-entity-id 2 wl-folder-is-group nil)) . "Flagged") ("%Trash" . "Trash") (#("%INBOX" 0 6 (wl-folder-entity-id 1 wl-folder-is-group nil)) . "Inbox") (#("%[Gmail]/Starred" 0 16 (wl-folder-entity-id 2 wl-folder-is-group nil)) . "Important") (#("%[Gmail]/Sent Mail" 0 18 (wl-folder-entity-id 3 wl-folder-is-group nil)) . "Sent") (#("%[Gmail]/Drafts" 0 15 (wl-folder-entity-id 4 wl-folder-is-group nil)) . "Drafts") (#("%[Gmail]/All Mail" 0 17 (wl-folder-entity-id 5 wl-folder-is-group nil)) . "Archive") (#("%[Gmail]/Trash" 0 14 (wl-folder-entity-id 6 wl-folder-is-group nil)) . "Trash") (#("%[Gmail]/Spam" 0 13 (wl-folder-entity-id 8 wl-folder-is-group nil)) . "Spam") (#("+draft" 0 6 (wl-folder-entity-id 9 wl-folder-is-group nil)) . "Drafts"))))
- '(wl-folder-process-duplicates-alist (quote (("^.*" . hide))) nil nil "
-Don't show me any duplicate messages")
- '(wl-folder-window-width 60)
- '(wl-highlight-folder-by-numbers 1)
- '(wl-icon-directory "~/.emacs.d/el-get/wanderlust/icons/")
- '(wl-interactive-exit nil)
- '(wl-interactive-save-folders nil)
- '(wl-interactive-send nil)
- '(wl-message-ignored-field-list (quote ("^.*:")))
- '(wl-message-sort-field-list (quote ("^From" "^Organization:" "^X-Attribution:" "^Subject" "^Date" "^To" "^Cc")))
- '(wl-message-visible-field-list (quote ("^\\(To\\|Cc\\):" "^Subject:" "^\\(From\\|Reply-To\\):" "^Organization:" "^Message-Id:" "^\\(Posted\\|Date\\):" "^\\(Mailer\\|User-Agent\\):" "^\\(List-Post\\):" "^\\(Xref\\):")))
- '(wl-organization "BoostPro Computing")
- '(wl-smtp-authenticate-type nil)
- '(wl-smtp-connection-type nil)
- '(wl-smtp-posting-port nil)
- '(wl-smtp-posting-server "localhost")
- '(wl-smtp-posting-user nil)
- '(wl-spam-folder "%[Gmail]/Spam")
- '(wl-summary-auto-sync-marks nil nil nil "
-Trying this setting to see if it improves usability vastly and if I
-can tolerate being out-of-sync occasionally.")
- '(wl-summary-line-format "%T%P%M/%D(%W)%h:%m %[ %17f %]%[%1@%] %t%C%s")
- '(wl-summary-showto-folder-regexp "^%" nil nil "Show recipient in place of sender in IMAP folders when I'm the sender")
- '(wl-summary-width nil)
- '(wl-thread-insert-opened t)
- '(wl-trash-folder "%Trash" nil nil "
-wl-dispose-folder-alist is set up so the only messages sent to Trash
-have been marked disposed in an \"All Mail\" folder.  Any others should
-be deleted immediately since there is a copy in All Mail.
-")
- '(wl-use-folder-petname (quote (modeline ask-folder read-folder)) nil nil "
-I have some hard-to-type folder names; why struggle?
-")
- '(wl-user-mail-address-list (quote ("dave@boostpro.com" "dave.abrahams@gmail.com" "daveabrahams@gmail.com" "boost.consulting@gmail.com" "david.abrahams@rcn.com" "dave@luannocracy.com")))
  '(x-select-enable-clipboard t))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
