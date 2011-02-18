@@ -44,7 +44,7 @@ on initsplit!"
          (initsplit-dynamic-customizations-alist
           (mapcar (lambda (f) 
                     `(,(progn (string-match elhome-settings-file-regexp f)
-                              (match-string 1 f))
+                              (concat "^" (match-string 1 f)))
                       ,(concat elhome-settings-directory f) nil nil))
                   sorted-files)))
 
