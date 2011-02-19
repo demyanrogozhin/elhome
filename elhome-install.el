@@ -31,11 +31,7 @@
                       :features initsplit)
                byte-code-cache
                markdown-mode
-               (:name elhome
-                      :type git
-                      :url "git://github.com/dabrahams/elhome.git"
-                      :features elhome
-                      :compile nil))))
+               elhome)))
 
         (save-window-excursion
           (el-get 'sync))
