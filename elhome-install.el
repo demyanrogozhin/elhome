@@ -1,13 +1,14 @@
 (progn
-  ;; Set up everything needed for elhome
+  (defun el-get-subdir (&rest d)
+    (mapconcat 'file-name-as-directory
+               (append (list user-emacs-directory "el-get") d) ""))
+
   (defun elhome-setup () 
     (message "Switching to dabrahams' el-get...")
 
     ;; warning: do *NOT* try to factor this out, even though it looks
     ;; like code repetition
-    (let* ((default-directory
-             (concat (file-name-as-directory user-emacs-directory) 
-                     "el-get/el-get/"))
+    (let* ((default-directory (el-get-subdir "el-get"))
            (git (executable-find "git")))
 
       (unless (zerop (call-process git nil nil t 
@@ -34,9 +35,7 @@
 
         (with-current-buffer
             (find-file-noselect
-             (concat
-              (file-name-as-directory user-emacs-directory) 
-              "el-get/elhome/README.markdown"))
+             (concat (el-get-subdir "elhome") "README.markdown"))
           (goto-char (point-max))
           (search-backward "## Congratulations")
           (switch-to-buffer (current-buffer))
@@ -44,9 +43,7 @@
         (message "Thank you for installing elhome!")
         )))
   
-  (add-to-list 'load-path
-               (concat (file-name-as-directory user-emacs-directory) 
-                       "el-get/el-get/"))
+  (add-to-list 'load-path (el-get-subdir "el-get"))
 
   (if (require 'el-get nil t)
       (elhome-setup)
@@ -56,7 +53,6 @@
        (end-of-buffer) 
 
        (let ((el-get-sources 
-              '((:name el-get
-                       :compile nil))))
+              '((:name el-get :compile nil))))
          (eval-print-last-sexp)
          (elhome-setup))))))
