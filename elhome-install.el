@@ -23,12 +23,8 @@
 
       (message "Grabbing elhome dependencies...")
       (let ((el-get-sources 
-             '((:name el-get
-                      :compile nil)
-               (:name initsplit
-                      :type git
-                      :url "git://github.com/dabrahams/initsplit.git"
-                      :features initsplit)
+             '((:name el-get :compile nil)
+               (:name initsplit :compile nil)
                byte-code-cache
                markdown-mode
                elhome)))
