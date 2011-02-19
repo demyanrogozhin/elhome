@@ -21,6 +21,7 @@ README files in each one for more details:
   early in startup as possible.
 * `~/.emacs.d/elhome/settings/` - settings for specific modes, including
   the general customization file settings.el
+* `~/.emacs.d/elhome/site-lisp/` - elisp files placed here (or in subdirectories) will be 
 
 Suggestions for more documentation, and especially patches, would be
 most welcome here!
