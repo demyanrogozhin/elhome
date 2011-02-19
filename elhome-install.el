@@ -1,6 +1,8 @@
 (progn
-  (setq debug-on-error t)
+  
+  ;; Set up everything needed for elhome
   (defun elhome-setup () 
+    (message "Loading dependencies")
     (let ((el-get-sources 
            '(el-get
              (:name initsplit
@@ -17,9 +19,8 @@
       (find-file-read-only
        (concat
         (file-name-as-directory user-emacs-directory) 
-        "el-get/elhome/README.mkd"))
-      (markdown-mode)
-      (message "Thank you for installing elhome")
+        "el-get/elhome/README.markdown"))
+      (message "Thank you for installing elhome!")
       ))
   
   (add-to-list 'load-path (concat
@@ -28,6 +29,7 @@
   (if (require 'el-get nil t)
       (elhome-setup)
     (url-retrieve
+     ;; Use an el-get installer that grabs from my own repo.
      "https://gist.github.com/raw/834740/9bd42b0f9508ed4dd278b3ff82059688660582d6/el-get-install.el"
      (lambda (s) (end-of-buffer) (eval-print-last-sexp) 
        (elhome-setup)))))
