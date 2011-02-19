@@ -1,6 +1,6 @@
 # ElHome - the _solvent_ Emacs configuration framework
 
-"Keep it together"
+> _"Keep it together"_
 
 ## Installation
 
@@ -11,6 +11,20 @@ ring such that `C-y' will insert it) and then `M-: C-y RET'
        "https://github.com/dabrahams/elhome/raw/framework/elhome-install.el"
        (lambda (s) (end-of-buffer) (eval-print-last-sexp)))
 
+## Congratulations, ELHOME is now installed!
+
+There are several new directories you'll want to work with.  See the
+README files in each one for more details:
+
+* `~/.emacs.d/elhome/` - where everything related to this configuration is stored
+* `~/.emacs.d/elhome/startup/` - elisp that is unconditionally loaded as
+  early in startup as possible.
+* `~/.emacs.d/elhome/settings/` - settings for specific modes, including
+  the general customization file settings.el
+
+Suggestions for more documentation, and especially patches, would be
+most welcome here!
+
 ## History
 
 This project came out of my second
@@ -19,10 +33,4 @@ because the [first system](http://github.com/dabrahams/elisp) I had
 set up had lost modularity and become too closely coupled with my own
 configuration.
 
-## Directories
-
-* `~/.emacs.d/elhome/` - where everything related to this configuration is stored
-* `~/.emacs.d/elhome/startup/` - elisp that is unconditionally loaded as
-  early in startup as possible
-* `~/.emacs.d/elhome/settings/` - settings for specific modes, including
-  the general customization file settings.el
+-Dave Abrahams

@@ -35,11 +35,19 @@
                       :type git
                       :url "git://github.com/dabrahams/elhome.git"
                       :features elhome))))
-        (el-get 'sync)
-        (find-file-read-only
-         (concat
-          (file-name-as-directory user-emacs-directory) 
-          "el-get/elhome/README.markdown"))
+
+        (save-window-excursion
+          (el-get 'sync))
+
+        (with-current-buffer
+            (find-file-noselect
+             (concat
+              (file-name-as-directory user-emacs-directory) 
+              "el-get/elhome/README.markdown"))
+          (goto-char (point-max))
+          (search-backward "## Congratulations")
+          (switch-to-buffer (current-buffer))
+          (recenter 'top))
         (message "Thank you for installing elhome!")
         )))
   
@@ -52,5 +60,4 @@
     (url-retrieve
      ;; Use an el-get installer that grabs from my own repo.
      "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
-     (lambda (s) (end-of-buffer) (eval-print-last-sexp) 
-       (elhome-setup)))))
+     (lambda (s) (end-of-buffer) (eval-print-last-sexp) (elhome-setup)))))
