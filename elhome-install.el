@@ -18,7 +18,10 @@
       (unless (zerop (call-process git nil nil t "fetch" "origin"))
           (error "unable to fetch from dabrahams/el-get"))
       (unless (zerop (call-process git nil nil t "checkout" "origin/master"))
-          (error "checkout dabrahams' master"))
+          (error "unable to checkout dabrahams' master"))
+
+      (load-library "el-get")
+
       (message "Grabbing elhome dependencies...")
       (let ((el-get-sources 
              '(el-get
