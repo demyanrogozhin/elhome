@@ -33,6 +33,8 @@
         (save-window-excursion
           (el-get 'sync))
 
+        (require 'elhome)
+
         (with-current-buffer
             (find-file-noselect
              (concat (el-get-subdir "elhome") "README.markdown"))

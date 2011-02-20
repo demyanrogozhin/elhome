@@ -151,6 +151,4 @@ Thus, if DIRECTORY contains both foo.el and foo.elc, \"foo\" will appear once in
           (add-to-list 'subdirs (file-name-directory f)))))
   )
 
-;; Do the work
-(elhome-init)
 (provide 'elhome)
