@@ -33,10 +33,10 @@
   ;; Reload el-get after switching to dwamacs
   (load-library "el-get")
 
-  (let (el-get-sources 
-        '((:name initsplit :compile nil)
-          byte-code-cache markdown-mode
-          elhome))
+  (let ((el-get-sources 
+         '((:name initsplit :compile nil)
+           byte-code-cache markdown-mode
+           elhome)))
     (el-get 'sync))
 
   (with-current-buffer
