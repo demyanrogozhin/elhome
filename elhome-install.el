@@ -1,9 +1,4 @@
-(let ((el-get-sources 
-       '((:name initsplit :compile nil)
-         byte-code-cache
-         markdown-mode
-         elhome))
-      (debug-on-error t))
+(let ((debug-on-error t))
 
   (defun el-get-subdir (&rest d)
     (mapconcat 'file-name-as-directory
@@ -38,8 +33,11 @@
   ;; Reload el-get after switching to dwamacs
   (load-library "el-get")
 
-  (message "Grabbing elhome dependencies...")
-  (el-get 'sync)
+  (let (el-get-sources 
+        '((:name initsplit :compile nil)
+          byte-code-cache markdown-mode
+          elhome))
+    (el-get 'sync))
 
   (with-current-buffer
       (find-file-noselect
