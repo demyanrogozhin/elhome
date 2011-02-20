@@ -69,6 +69,8 @@ If TAIL contains a rooted path element, any preceding elements are discarded."
          
 ;; top-level function that does all the work.
 (defun elhome-init ()
+  "Prepare elhome for use.  Call this function early in your .emacs"
+  (interactive)
   (unless (boundp 'elhome-directory)
     (defconst elhome-directory
       (file-name-as-directory
