@@ -5,7 +5,7 @@
 ## Installation
 
 Evaluate this elisp.  You can copy it (to the clipboard or kill
-ring such that `C-y' will insert it) and then `M-: C-y RET'
+ring such that ‘C-y’ will insert it) and then ‘M-: C-y RET’
 
      (url-retrieve
        "https://github.com/dabrahams/elhome/raw/framework/elhome-install.el"
