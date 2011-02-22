@@ -71,3 +71,6 @@ the settings file will be lost."
       (load settings-file))))
 
 (add-hook 'after-load-functions 'elhome-load-settings)
+
+;; load -settings.el files for libs that were loaded before this lib
+(mapc 'elhome-load-settings (mapcar 'car load-history))
