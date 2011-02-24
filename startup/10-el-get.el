@@ -120,7 +120,8 @@ are now installed"
                (dwa/el-get-dependencies package))
     (dwa/el-get-demand1 package)))
 
-(defcustom dwa/el-get-standard-packages nil
+(defcustom dwa/el-get-standard-packages 
+  ("elhome" "byte-code-cache" "el-get" "initsplit")
   "A list of package names that are part of your
 standard package requirements.  These will be installed and/or
 initialized automatically at startup, as required."
