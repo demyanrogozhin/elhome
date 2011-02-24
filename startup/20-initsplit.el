@@ -11,5 +11,6 @@
 (dolist (x '(type name))
   (let* ((var-name (concat "system-" (symbol-name x))) 
          (var-value (eval (intern var-name)))
-         (theme (intern (concat var-name "-" (format "%s" var-value)))))
+         (theme (intern (concat var-name "-" (format "%s" var-value))))
+         (load-path (list elhome-settings-directory)))
     (ignore-errors (load-theme theme))))
