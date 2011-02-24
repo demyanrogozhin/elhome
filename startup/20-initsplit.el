@@ -1,4 +1,5 @@
 (require 'initsplit)
+(setq initsplit-default-directory elhome-settings-directory)
 
 ;; Load up any customization themes based on the system-type and the
 ;; system-name.  This allows us to use the customize interface (via
