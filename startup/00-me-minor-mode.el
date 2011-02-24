@@ -16,7 +16,7 @@
 
 (me-minor-mode 1)
 
-(defun my-minibuffer-setup-hook ()
+(defun me-minibuffer-setup-hook ()
   (me-minor-mode 0))
 
-(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
+(add-hook 'minibuffer-setup-hook 'me-minibuffer-setup-hook)
