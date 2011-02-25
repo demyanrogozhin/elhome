@@ -121,7 +121,7 @@ are now installed"
     (dwa/el-get-demand1 package)))
 
 (defcustom dwa/el-get-standard-packages 
-  ("elhome" "byte-code-cache" "el-get" "initsplit")
+  '("elhome" "byte-code-cache" "el-get" "initsplit")
   "A list of package names that are part of your
 standard package requirements.  These will be installed and/or
 initialized automatically at startup, as required."
