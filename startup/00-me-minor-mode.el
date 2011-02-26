@@ -15,8 +15,3 @@
   t " me" 'me-minor-mode-map)
 
 (me-minor-mode 1)
-
-(defun me-minibuffer-setup-hook ()
-  (me-minor-mode 0))
-
-(add-hook 'minibuffer-setup-hook 'me-minibuffer-setup-hook)
