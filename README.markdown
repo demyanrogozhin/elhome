@@ -8,7 +8,7 @@ Evaluate this elisp.  You can copy it (to the clipboard or kill
 ring such that ‘C-y’ will insert it) and then ‘M-: C-y RET’
 
      (url-retrieve
-       "https://github.com/dabrahams/elhome/raw/framework/elhome-install.el"
+       "https://github.com/dabrahams/elhome/raw/master/elhome-install.el"
        (lambda (s) (end-of-buffer) (eval-print-last-sexp)))
 
 ## Congratulations, ELHOME is now installed!
