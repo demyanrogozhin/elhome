@@ -19,16 +19,16 @@
   (let* ((default-directory (el-get-subdir "el-get"))
          (git (executable-find "git")))
 
-    (unless (zerop (call-process git nil nil t 
-                                 "remote" "add" "dabrahams"
-                                 "https://github.com/dabrahams/el-get.git"))
-      (error "unable to point origin at dabrahams' el-get"))
-    (unless (zerop (call-process git nil nil t "fetch" "dabrahams"))
-      (error "unable to fetch from dabrahams/el-get"))
-    (unless (zerop (call-process git nil nil t "branch" "-m" "master" "dimitri-master"))
-      (error "unable to rename local dimitri master"))
-    (unless (zerop (call-process git nil nil t "checkout" "--track" "dabrahams/master"))
-      (error "unable to checkout dabrahams' master"))
+    ;; (unless (zerop (call-process git nil nil t 
+    ;;                              "remote" "add" "dabrahams"
+    ;;                              "https://github.com/dabrahams/el-get.git"))
+    ;;   (error "unable to point origin at dabrahams' el-get"))
+    ;; (unless (zerop (call-process git nil nil t "fetch" "dabrahams"))
+    ;;   (error "unable to fetch from dabrahams/el-get"))
+    ;; (unless (zerop (call-process git nil nil t "branch" "-m" "master" "dimitri-master"))
+    ;;   (error "unable to rename local dimitri master"))
+    ;; (unless (zerop (call-process git nil nil t "checkout" "--track" "dabrahams/master"))
+    ;;   (error "unable to checkout dabrahams' master"))
     )
 
   (add-to-list 'load-path (el-get-subdir "el-get"))
