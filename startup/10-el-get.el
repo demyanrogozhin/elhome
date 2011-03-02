@@ -28,7 +28,7 @@ intern it and return that."
    (with-current-buffer
        (url-retrieve-synchronously 
         ;; "https://github.com/dimitri/el-get/raw/master/el-get-install.el" ;; official repo
-        "https://github.com/dabrahams/el-get/raw/t/dev/el-get-install.el" ;; personal clone
+        "https://github.com/dabrahams/el-get/raw/master/el-get-install.el" ;; personal clone
         ;; "file:///Users/dave/Dropbox/home/.emacs.d/el-get/el-get/el-get-install.el" ;; local copy
         )
 
