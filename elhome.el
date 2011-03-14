@@ -7,10 +7,9 @@
 
 
 ;; Install:
-;; You can use this file as your .emacs (or .emacs.d/init.el)
-;; directly, or symlink to it. If you need to customize where things
-;; are stored (see elhome-directory below for example) you can load it
-;; from your .emacs after setting up some constants.
+;; See README.markdown for details. You need to call (elhome-init),
+;; which el-get can do for you, or you can load this file manually and
+;; then call (elhome-init).
 
 ;; *** IMPORTANT NOTE ***: I would rather call this module ElHombre,
 ;; but can't find a good excuse.
