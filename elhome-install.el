@@ -14,27 +14,7 @@
   (switch-to-buffer "*Messages*")
   (message "*\n*\n* Patience please; ELHOME is installing...\n* \n*")
 
-  (message "Switching to dabrahams' el-get...")
-
-  (let* ((default-directory (el-get-subdir "el-get"))
-         (git (executable-find "git")))
-
-    ;; (unless (zerop (call-process git nil nil t 
-    ;;                              "remote" "add" "dabrahams"
-    ;;                              "https://github.com/dabrahams/el-get.git"))
-    ;;   (error "unable to point origin at dabrahams' el-get"))
-    ;; (unless (zerop (call-process git nil nil t "fetch" "dabrahams"))
-    ;;   (error "unable to fetch from dabrahams/el-get"))
-    ;; (unless (zerop (call-process git nil nil t "branch" "-m" "master" "dimitri-master"))
-    ;;   (error "unable to rename local dimitri master"))
-    ;; (unless (zerop (call-process git nil nil t "checkout" "--track" "dabrahams/master"))
-    ;;   (error "unable to checkout dabrahams' master"))
-    )
-
   (add-to-list 'load-path (el-get-subdir "el-get"))
-
-  ;; Reload el-get after switching to dwamacs
-  (load-library "el-get")
 
   (let ((el-get-sources 
          '((:name initsplit :compile nil)

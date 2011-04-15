@@ -16,26 +16,12 @@ intern it and return that."
 (add-hook 'el-get-post-init-hooks 'dwa/el-get-mark-initialized)
 
 ;; Install el-get if necessary
-(condition-case nil 
-    (require 'el-get)
-  (file-error
-   ;;
-   ;; if el-get couldn't be found, try to install it from GitHub
-   ;;
-   (require 'bytecomp)
-
-   ;; Find the installer page
-   (with-current-buffer
-       (url-retrieve-synchronously 
-        ;; "https://github.com/dimitri/el-get/raw/master/el-get-install.el" ;; official repo
-        "https://github.com/dabrahams/el-get/raw/master/el-get-install.el" ;; personal clone
-        ;; "file:///Users/dave/Dropbox/home/.emacs.d/el-get/el-get/el-get-install.el" ;; local copy
-        )
-
-     ;; Evaluate it to install el-get
-     (end-of-buffer)
-     (eval-last-sexp nil)
-     (kill-buffer))))
+(unless (require 'el-get nil t)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://github.com/dimitri/el-get/raw/master/el-get-install.el")
+    (end-of-buffer)
+    (eval-print-last-sexp)))
 
 ;; Install/init packages that I need in order to complete the init sequence
 (let ((el-get-sources
