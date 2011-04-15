@@ -13,6 +13,7 @@
 (defun elhome-file-loaded-p (file)
   (load-history-filename-element (load-history-regexp file)))
 
+(defvar elhome-loading-settings '())
 
 (defcustom elhome-reloaded-settings-prefixes nil
   "A list of prefix strings indicating \"-settings\" files that
@@ -30,9 +31,11 @@ the settings file will be lost."
          (settings-file (condition-case nil (find-library-name settings) (error nil))))
 
     (when (and settings-file
+               (not (member settings-file elhome-loading-settings))
                (or (member key elhome-reloaded-settings-prefixes)
                    (not (elhome-file-loaded-p settings-file))))
-      (load settings-file))))
+      (let ((elhome-loading-settings (cons settings-file elhome-loading-settings)))
+        (load settings-file)))))
 
 (add-hook 'after-load-functions 'elhome-load-settings)
 
