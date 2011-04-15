@@ -21,7 +21,7 @@ rather than only once.  You may want to put files in this list
 that completely replace the definitions of existing library
 functions, however note that any unsaved customizations stored in
 the settings file will be lost."
-  :type '(repeat 'string)
+  :type '(repeat string)
   :group 'elhome)
 
 (defun elhome-load-settings (abs-file)
