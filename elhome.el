@@ -87,10 +87,15 @@ Defaults to elhome-directory/`settings/', unless you set it in your .emacs first
     )
 
   ;; Add to the load path the directory of any elisp below the
-  ;; site-lisp/ subdirectory of elhome-directory
-  (setq load-path (elhome-add-subdirs-containing 
-                   (elhome-path-join elhome-directory "site-lisp")
-                   elhome-load-suffix-regexp elhome-initial-load-path))
+  ;; site-lisp/ subdirectory of elhome-directory, and the
+  ;; elhome-settings-directory for convenience
+  (setq load-path (append
+                   (elhome-add-subdirs-containing 
+                    (elhome-path-join elhome-directory "site-lisp")
+                    elhome-load-suffix-regexp 
+                    elhome-initial-load-path)
+                   `(,elhome-settings-directory)
+                   ))
 
   (setq custom-file (elhome-path-join elhome-settings-directory "settings.el"))
 
