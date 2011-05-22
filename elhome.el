@@ -103,7 +103,7 @@ Defaults to elhome-directory/`settings/', unless you set it in your .emacs first
       (load (elhome-strip-lisp-suffix custom-file)))
 
   ;; load up all the startup files
-  (mapc 'load 
+  (mapc (lambda (file) (load file nil t))
         (sort
          (apply 
           'append
