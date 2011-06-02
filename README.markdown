@@ -53,14 +53,12 @@ alphabetical order.  Look at `elhome/startup` for an example.
 N.B. This feature requires `after-load-functions`, introduced in Emacs 23.2.
 
 Any time a file named `foo.el` is loaded, a file in settings called
-`foo-settings.el` is loaded if it exists.
+`foo-settings.el` is loaded if it exists.  This lets you easily
+organize your customizations according to subject matter.
 
-Be careful with putting stuff in `lisp-mode-settings.el`, since
-`el-get` and `byte-code-cache` manipulate `.el` files, and will
-trigger these customizations right away, perhaps before they are
-ready.
-
-FIXME: need to disable lisp mode when operating on .el files.
+Additionally, `initsplit` is used to split `customize` settings into
+different files.  Every `foo-settings.el` file will be used to store
+all customized variables and faces with names starting `foo-`.
 
 ## Site-lisp
 
