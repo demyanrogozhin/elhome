@@ -3,19 +3,18 @@
 
 (require 'initsplit)
 
-(defadvice custom-save-all (around elhome-auto-initsplit
-                                   activate compile preactivate)
-  "Wrapper over custom-save-all that treats the files in
-`elhome-settings-directory' as initsplit customization files.  
+(defun elhome-dynamic-customizations-alist ()
+  "Return a list of (PATTERN, FILENAME) pairs that, when added to
+`initsplit-customizations-alist', treats all the *-settings.el
+files in `elhome-settings-directory' as initsplit customization
+files.
 
 A file with the name \"foobar-settings.el\" will store all the
 customizations whose name begins with \"foobar-\".  Note: depends
 on initsplit!"
   (let* ((settings-files 
           (remove-if-not
-           (lambda (s) (and
-                        (string-match-p elhome-settings-file-regexp s)
-                        (elhome-file-loaded-p (concat elhome-settings-directory s))))
+           (lambda (s) (string-match-p elhome-settings-file-regexp s))
            
            (mapcar 'file-name-nondirectory 
                    (elhome-directory-elisp elhome-settings-directory))))
@@ -24,16 +23,14 @@ on initsplit!"
          ;; org-attach-settings.el to coexist peacefully --- the
          ;; longer (thus more-specific) match will be made first
          (sorted-files (sort settings-files
-                             (lambda (x y) (> (length x) (length y)))))
+                             (lambda (x y) (> (length x) (length y))))))
 
          ;; Add elements to the effective customizations alist used by
          ;; the advice `initsplit-custom-save-all'.
-         (initsplit-dynamic-customizations-alist
-          (mapcar (lambda (f) 
-                    `(,(progn (string-match elhome-settings-file-regexp f)
-                              (concat "^" (regexp-quote (match-string 1 f))))
-                      ,(concat elhome-settings-directory f) nil nil))
-                  sorted-files)))
+    (mapcar (lambda (f) 
+              `(,(progn (string-match elhome-settings-file-regexp f)
+                        (concat "^" (regexp-quote (match-string 1 f))))
+                ,(concat elhome-settings-directory f) nil nil))
+            sorted-files)))
 
-    ad-do-it))
-
+(add-to-list 'initsplit-dynamic-customizations-alist 'elhome-dynamic-customizations-alist)
