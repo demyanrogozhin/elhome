@@ -8,8 +8,4 @@
     (end-of-buffer)
     (eval-print-last-sexp)))
 
-(save-excursion
-  (find-function 'el-get-build)
-  (edebug-defun))
-
 (el-get)
