@@ -1,9 +1,5 @@
 (let ((debug-on-error t))
 
-  (defun el-get-subdir (&rest d)
-    (mapconcat 'file-name-as-directory
-               (append (list user-emacs-directory "el-get") d) ""))
-
   (setq el-get-byte-compile nil)
   (unless (require 'el-get nil t)
     (with-current-buffer
@@ -22,7 +18,7 @@
 
   (with-current-buffer
       (find-file-noselect
-       (concat (el-get-subdir "elhome") "README.markdown"))
+       (concat (el-get-package-directory "elhome") "README.markdown"))
     (goto-char (point-max))
     (search-backward "## Congratulations")
     (switch-to-buffer (current-buffer))
