@@ -15,10 +15,6 @@
 
   (add-hook 'el-get-post-install-hooks 'el-get-init)
 
-  (setq el-get-sources
-         '((:name elhome
-            :depends (initsplit byte-code-cache))))
-
   (eval-after-load 'elhome
     '(with-current-buffer
         (find-file-noselect
@@ -29,6 +25,10 @@
        (switch-to-buffer (current-buffer))
        (recenter 'top)))
 
-  (el-get nil '(elhome))
+  (let ((el-get-sources
+         '((:name elhome
+            :depends (initsplit byte-code-cache)))))
+
+    (el-get nil '(elhome)))
 
   (message "Thank you for installing elhome!"))
