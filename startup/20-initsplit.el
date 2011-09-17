@@ -46,5 +46,18 @@
   (let* ((var-name (concat "system-" (symbol-name x))) 
          (var-value (eval (intern var-name)))
          (theme (intern (concat var-name "-" (format "%s" var-value))))
-         (load-path (list elhome-settings-directory)))
-    (ignore-errors (load-theme theme))))
+         (load-path (cons elhome-settings-directory load-path)))
+
+    ;; Try to enable the theme
+    (condition-case err
+        (enable-theme theme)
+      (file-error
+       (unless
+           (equal (cdr err) `("Cannot open load file"
+                              ,(concat (symbol-name theme) "-theme")))
+         (signal (car err) (cdr err)))))
+
+    ;; HACK: remove the theme from the customization variable.  This
+    ;; should stay programmatic.
+    (setq custom-enabled-themes
+          (delq theme custom-enabled-themes))))
