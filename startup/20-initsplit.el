@@ -2,7 +2,7 @@
 (setq initsplit-default-directory elhome-settings-directory)
 
 
-;; Ease-of-use feature 
+;; Ease-of-use feature
 ;;
 ;; If initsplit would load xxx-settings as a way of ensuring its
 ;; customizations aren't clobbered, try to load xxx instead (which
@@ -19,7 +19,7 @@
   (unless
       (and
        ;; Is this file in the right directory?
-       (string= (file-name-directory file) 
+       (string= (file-name-directory file)
                 (expand-file-name
                  (file-name-as-directory elhome-settings-directory)))
        ;; Does it exist?
@@ -43,7 +43,7 @@
 ;; [[info:emacs:Custom%20Themes][info:emacs:Custom Themes]] for more on
 ;; themes.
 (dolist (x '(type name))
-  (let* ((var-name (concat "system-" (symbol-name x))) 
+  (let* ((var-name (concat "system-" (symbol-name x)))
          (var-value (eval (intern var-name)))
          (theme (intern (concat var-name "-" (format "%s" var-value))))
          (load-path (cons elhome-settings-directory load-path)))

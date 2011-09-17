@@ -27,7 +27,7 @@ on initsplit!"
 
          ;; Add elements to the effective customizations alist used by
          ;; the advice `initsplit-custom-save-all'.
-    (mapcar (lambda (f) 
+    (mapcar (lambda (f)
               `(,(progn (string-match elhome-settings-file-regexp f)
                         (concat "\\`" (regexp-quote (match-string 1 f)) "-"))
                 ,(concat elhome-settings-directory f) nil nil))
