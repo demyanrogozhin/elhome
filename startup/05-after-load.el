@@ -50,19 +50,22 @@ corresponding \"-settings\" files in
       (puthash (match-string 1 f) f elhome-libs-with-settings)))
   elhome-libs-with-settings)
 
-(defun elhome-load-settings (abs-file)
-  "Given ABS-FILE, the absolute filename of a library that has
-been loaded, load its corresponding \"-settings\" file."
-  (let (s (lib (file-name-nondirectory (elhome-strip-lisp-suffix abs-file))))
-    (when (setq s (gethash lib (elhome-libs-with-settings)))
-      (setq s (concat 
-               (file-name-as-directory elhome-settings-directory) s))
+(defun elhome-do-load-settings (abs-file s lib)
+  (setq s (concat
+           (file-name-as-directory elhome-settings-directory) s))
       (when (and (not (member s elhome-loading-settings))
                  (or (not (elhome-file-loaded-p s))
                      (member lib elhome-reloaded-settings-libs)))
         (let ((elhome-loading-settings
                (cons s elhome-loading-settings)))
-          (load s))))))
+          (load s))))
+
+(defun elhome-load-settings (abs-file)
+  "Given ABS-FILE, the absolute filename of a library that has
+been loaded, load its corresponding \"-settings\" file."
+  (let* ((lib (file-name-nondirectory (elhome-strip-lisp-suffix abs-file)))
+         (s (gethash lib (elhome-libs-with-settings))))
+    (when s (elhome-do-load-settings abs-file s lib))))
 (add-hook 'after-load-functions 'elhome-load-settings)
 
 ;; load -settings.el files for libs that were loaded before this lib
