@@ -16,8 +16,7 @@ on initsplit!"
           (remove-if-not
            (lambda (s) (string-match-p elhome-settings-file-regexp s))
            
-           (mapcar 'file-name-nondirectory 
-                   (elhome-directory-elisp elhome-settings-directory))))
+           (elhome-nondirectory-elisp elhome-settings-directory)))
 
          ;; sort by decreasing length allows org-settings.el and
          ;; org-attach-settings.el to coexist peacefully --- the

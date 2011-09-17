@@ -138,9 +138,14 @@ determine equality.  If PRED is not supplied, `equal' is used"
 (defun elhome-strip-lisp-suffix (path)
   (replace-regexp-in-string elhome-load-suffix-regexp "" path))
 
-(defun elhome-directory-elisp (directory)
+(defun elhome-nondirectory-elisp (directory)
   "Return a sorted list of all the elisp files in DIRECTORY, sans extension, without duplicates.
 Thus, if DIRECTORY contains both foo.el and foo.elc, \"foo\" will appear once in the list"
+  (mapcar 'file-name-nondirectory (elhome-directory-elisp directory)))
+
+(defun elhome-directory-elisp (directory)
+  "Return a sorted list of the full path to all the elisp files in DIRECTORY, sans extension, without duplicates.
+Thus, if DIRECTORY contains both foo.el and foo.elc, \"foo\" will appear once in the list."
   (and (file-directory-p directory)
        (elhome-unique
         (mapcar
@@ -154,7 +159,6 @@ Thus, if DIRECTORY contains both foo.el and foo.elc, \"foo\" will appear once in
         (unless (member (file-relative-name f root) '("." ".."))
           (setq subdirs (elhome-add-subdirs-containing f pattern subdirs)))
       (if (string-match pattern f)
-          (add-to-list 'subdirs (file-name-directory f)))))
-  )
+          (add-to-list 'subdirs (file-name-directory f))))))
 
 (provide 'elhome)
