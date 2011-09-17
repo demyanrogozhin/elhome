@@ -2,11 +2,11 @@
 ;; to be automatically loaded after the xxxx library is loaded
 
 (defcustom elhome-settings-file-regexp "\\`\\(.+\\)-settings\\'"
-  "A regexp used to match files in `elhome-settings-directory'
-  that should be automatically loaded and used for customizations
-  after a library is loaded.  The first match group names the
-  library after which to load and the prefix of all customization
-  variables placed there."
+  "A regexp used to match (the non-extension part of) filenames
+  in `elhome-settings-directory' that should be automatically
+  loaded and used for customizations after a library is loaded.
+  The first match group names the library after which to load and
+  the prefix of all customization variables placed there."
   :type 'regexp
   :group 'elhome)
 
