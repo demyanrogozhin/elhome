@@ -9,6 +9,6 @@
     (eval-print-last-sexp)))
 
 ;; For some reason, el-get doesn't automatically init what you install anymore
-(add-hook 'el-get-post-install-hooks 'el-get-init)
+;(add-hook 'el-get-post-install-hooks 'el-get-init)
 
 (el-get)
