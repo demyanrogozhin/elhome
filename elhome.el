@@ -66,6 +66,11 @@ If TAIL contains a rooted path element, any preceding elements are discarded."
         (t (elhome-path-join
             user-emacs-directory "el-get/elhome"))))
          
+(defun elhome-load (lib &optional noerror nomessage nosuffix must-suffix)
+  (when debug-on-error
+    (message "elhome: loading %s" lib))
+  (load lib noerror nomessage nosuffix must-suffix))
+
 ;; top-level function that does all the work.
 (defun elhome-init ()
   "Prepare elhome for use.  Call this function early in your .emacs"
@@ -100,10 +105,10 @@ Defaults to elhome-directory/`settings/', unless you set it in your .emacs first
   (setq custom-file (elhome-path-join elhome-settings-directory "settings.el"))
 
   (if (file-exists-p custom-file)
-      (load (elhome-strip-lisp-suffix custom-file)))
+      (elhome-load (elhome-strip-lisp-suffix custom-file)))
 
   ;; load up all the startup files
-  (mapc (lambda (file) (load file nil t))
+  (mapc (lambda (file) (elhome-load file))
         (sort
          (apply 
           'append
