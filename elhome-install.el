@@ -4,6 +4,10 @@
   (message "*\n*\n* Patience please; ELHOME is installing...\n* \n*")
 
   (setq el-get-byte-compile nil)
+
+  (unless (require 'el-get nil t) 
+    (with-current-buffer (url-retrieve-synchronously "https://raw.github.com/dimitri/el-get/master/el-get-install.el") (end-of-buffer) (eval-print-last-sexp))) (el-get 'sync)
+
   (unless (require 'el-get nil t)
     (with-current-buffer
         (url-retrieve-synchronously

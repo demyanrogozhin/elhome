@@ -4,11 +4,11 @@
 (unless (require 'el-get nil t)
   (with-current-buffer
       (url-retrieve-synchronously
-       "https://github.com/dimitri/el-get/raw/master/el-get-install.el")
-    (end-of-buffer)
-    (eval-print-last-sexp)))
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp))
+  )
 
 ;; For some reason, el-get doesn't automatically init what you install anymore
-(add-hook 'el-get-post-install-hooks 'el-get-init)
-
+;; (add-hook 'el-get-post-install-hooks 'el-get-init)
 (el-get)
