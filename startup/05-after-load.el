@@ -63,10 +63,12 @@ corresponding \"-settings\" files in
 (defun elhome-load-settings (abs-file)
   "Given ABS-FILE, the absolute filename of a library that has
 been loaded, load its corresponding \"-settings\" file."
-  (let* ((lib (file-name-nondirectory (elhome-strip-lisp-suffix abs-file)))
-         (s (gethash lib (elhome-libs-with-settings))))
-    (when s (elhome-do-load-settings abs-file s lib))))
+  (when (and abs-file (not (string= "" abs-file)))
+    (let* ((lib (file-name-nondirectory (elhome-strip-lisp-suffix abs-file)))
+           (s (gethash lib (elhome-libs-with-settings))))
+      (when s (elhome-do-load-settings abs-file s lib)))))
+
 (add-hook 'after-load-functions 'elhome-load-settings)
 
 ;; load -settings.el files for libs that were loaded before this lib
-(mapc 'elhome-load-settings (delete "" (mapcar 'car load-history)))
+(mapc 'elhome-load-settings (mapcar 'car load-history))
