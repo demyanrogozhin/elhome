@@ -50,7 +50,8 @@
 
     ;; Try to enable the theme
     (condition-case err
-        (enable-theme theme)
+        (let ((custom-known-themes (list theme 'user)))
+          (enable-theme theme))
       (file-error
        (unless
            (equal (cdr err) `("Cannot open load file"
