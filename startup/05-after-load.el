@@ -63,7 +63,16 @@ corresponding \"-settings\" files in
 (defun elhome-load-settings (abs-file)
   "Given ABS-FILE, the absolute filename of a library that has
 been loaded, load its corresponding \"-settings\" file."
-  (when (and abs-file (not (string= "" abs-file)))
+  (when (and abs-file (not (string= "" abs-file))
+             ;; Some packages (e.g. CEDET) contain
+             ;; implementation-detail files that are loaded via
+             ;; (require 'foo/bar).  We don't want to load
+             ;; bar-settings when that file is loaded, because there
+             ;; might be a "bar.el" in load-path.  It's conceivable
+             ;; we'll want to do something more sophisticated someday,
+             ;; but for now, simply skip all "xxx-settings.el" loading
+             ;; for those files.
+             (member (file-name-directory abs-file) load-path))
     (let* ((lib (file-name-nondirectory (elhome-strip-lisp-suffix abs-file)))
            (s (gethash lib (elhome-libs-with-settings))))
       (when s (elhome-do-load-settings abs-file s lib)))))
