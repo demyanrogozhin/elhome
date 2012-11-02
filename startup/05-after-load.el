@@ -72,7 +72,7 @@ been loaded, load its corresponding \"-settings\" file."
              ;; we'll want to do something more sophisticated someday,
              ;; but for now, simply skip all "xxx-settings.el" loading
              ;; for those files.
-             (member (file-name-directory abs-file) load-path))
+             (member (file-name-directory abs-file) (mapcar 'file-name-as-directory load-path)))
     (let* ((lib (file-name-nondirectory (elhome-strip-lisp-suffix abs-file)))
            (s (gethash lib (elhome-libs-with-settings))))
       (when s (elhome-do-load-settings abs-file s lib)))))
