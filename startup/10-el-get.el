@@ -9,4 +9,32 @@
     (eval-print-last-sexp))
   )
 
-(el-get)
+(defun elhome-el-get-is-running ()
+  "Check to see if el-get is already running.
+
+If el-get invoked elhome, and then elhome invokes el-get, we get
+a bad recursion.
+
+On the other hand, some people prefer to have elhome manage
+el-get. In this case, el-get won't show up in the call stack, so
+we can invoke it ourselves."
+  (let ((n 0)
+        (found nil))
+    (while (and (not found) (backtrace-frame n))
+      (let* ((frame (backtrace-frame n))
+             (function (cadr frame)))
+        (let ((function-name (cond
+                              ((stringp function) function)
+                              ((symbolp function) (symbol-name function))
+                              ((listp function) "")  ; lambda
+                              ((eq (type-of function) 'compiled-function) "")
+                              (t (progn
+                                   (message "unknown form of backtrace frame %s"
+                                            frame)
+                                   "")))))
+          (setq found (string-match "^el-get" function-name))))
+      (setq n (+ 1 n)))
+  found))
+
+(when (not (elhome-el-get-is-running))
+    (el-get))
