@@ -1,4 +1,4 @@
-;;; elhome --- A framework for a "home" Emacs configuration
+;;; elhome.el --- A framework for a "home" Emacs configuration
 
 ;; Description:
 ;; Everything you need to hang your emacs customizations off of,
@@ -72,6 +72,7 @@ If TAIL contains a rooted path element, any preceding elements are discarded."
   (load lib noerror nomessage nosuffix must-suffix))
 
 ;; top-level function that does all the work.
+;;;###autoload
 (defun elhome-init ()
   "Prepare elhome for use.  Call this function early in your .emacs"
   (interactive)
@@ -167,3 +168,4 @@ Thus, if DIRECTORY contains both foo.el and foo.elc, \"foo\" will appear once in
           (add-to-list 'subdirs (file-name-directory f))))))
 
 (provide 'elhome)
+;;; elhome.el ends here
