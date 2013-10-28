@@ -1,10 +1,19 @@
 ;;; elhome.el --- A framework for a "home" Emacs configuration
 
-;; Description:
+;; Description: A framework for a "home" Emacs configuration
+;; Author: Dave Abrahams <dave@boostpro.com>
+;; Maintainer: Demyan Rogozhin <demyan.rogozhin@gmail.com>
+;; Created:  2010-11-02
+;; Version: 0.9.1
+;; Keywords: lisp
+;; URL: http://github.com/demyanrogozhin/elhome
+;; Package-Requires: ((initsplit "20120630"))
+
+;;; Commentary:
+
 ;; Everything you need to hang your emacs customizations off of,
 ;; install your own packages, etc., without the system becoming
 ;; unscalable
-
 
 ;; Install:
 ;; See README.markdown for details. You need to call (elhome-init),
@@ -13,12 +22,6 @@
 
 ;; *** IMPORTANT NOTE ***: I would rather call this module ElHombre,
 ;; but can't find a good excuse.
-
-;; Author: Dave Abrahams <dave@boostpro.com>
-;; Created:  2010-11-02
-;; Version: 0.9
-;; Keywords: lisp
-;; X-URL: http://github.com/dabrahams/elhome
 
 ;; This file is in the public domain
 
