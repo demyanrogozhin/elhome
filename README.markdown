@@ -4,22 +4,34 @@
 
 ## Installation
 
-Evaluate this elisp.  You can copy it (to the clipboard or kill
-ring such that ‘C-y’ will insert it) and then ‘M-: C-y RET’
+I highly recommend installing elhome through elpa.
 
-     (url-retrieve
-       "https://github.com/dabrahams/elhome/raw/master/elhome-install.el"
-       (lambda (s) (end-of-buffer) (eval-print-last-sexp)))
+It's available on [melpa](http://melpa.milkbox.net/):
 
-This will use el-get to install elhome.  Then, add code to your `.emacs` to do one of two things:
+    M-x package-install elhome
+
+### Alternative - use el-get to install elhome
+* Evaluate this elisp.  You can copy it (to the clipboard or kill ring such that `C-y` will insert it) and then `M-: C-y RET`
+
+
+    (url-retrieve
+      "https://github.com/dabrahams/elhome/raw/master/elhome-install.el"
+      (lambda (s) (end-of-buffer) (eval-print-last-sexp)))
+
+
+## Usage
+
+Add code to your `.emacs` to do one of two things:
 
 * Load elhome.el manually from your init.el, and then call `(elhome-init)`. Code
   might look like this:
 
-    (load "~/.emacs.d/el-get/elhome/elhome.el")
+
+    (load "~/.emacs.d/elpa/elhome/elhome.el")
     (elhome-init)
 
 * Use `el-get` to initialize elhome.  A call to `el-get` might look like this:
+
 
     (setq el-get-sources
           '(
