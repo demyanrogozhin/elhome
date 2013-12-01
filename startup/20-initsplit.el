@@ -48,7 +48,7 @@
          (theme-name (concat var-name "-" (format "%s" var-value)))
          (theme (intern theme-name))
          (ignored-errors
-          `((file-error ("Cannot open load file" ,(concat theme-name "-theme")))
+          `((file-error "Cannot open load file" ,(concat theme-name "-theme"))
             (error ,(concat "Undefined Custom theme " theme-name))
             (error ,(concat "Unable to find theme file for `" theme-name "'"))
             ))
