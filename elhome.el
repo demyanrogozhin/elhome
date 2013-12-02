@@ -106,6 +106,7 @@ Defaults to elhome-directory/`settings/', unless you set it in your .emacs first
                    `(,elhome-settings-directory)
                    ))
 
+  (make-directory elhome-settings-directory :parents)
   (setq custom-file (elhome-path-join elhome-settings-directory "settings.el"))
 
   (if (file-exists-p custom-file)
