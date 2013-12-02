@@ -3,6 +3,12 @@
 
 (require 'initsplit)
 
+;; Emacs 22.1 doesn't contain string-match-p, so we define it
+;; ourselves if necessary
+(unless	(fboundp 'string-match-p)
+  (defun string-match-p (regexp string	&optional start)
+    (save-match-data (string-match regexp string start))))
+
 (defun elhome-dynamic-customizations-alist ()
   "Return a list of (PATTERN, FILENAME) pairs that, when added to
 `initsplit-customizations-alist', treats all the *-settings.el
