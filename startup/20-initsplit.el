@@ -47,24 +47,13 @@
          (var-value (eval (intern var-name)))
          (theme-name (concat var-name "-" (format "%s" var-value)))
          (theme (intern theme-name))
-         (ignored-errors
-          `((file-error "Cannot open load file" ,(concat theme-name "-theme"))
-            (error ,(concat "Undefined Custom theme " theme-name))
-            (error ,(concat "Unable to find theme file for `" theme-name "'"))
-            ))
          (load-path (cons elhome-settings-directory load-path)))
 
-    ;; Try to enable the theme
-    (condition-case err
-        (let ((custom-known-themes (list theme 'user)))
-          (load-theme theme)
-          (enable-theme theme))
-
-      ((error file-error) 
-       (unless (member err ignored-errors)
-         (signal (car err) (cdr err)))))
-
-    ;; HACK: remove the theme from the customization variable.  This
-    ;; should stay programmatic.
-    (setq custom-enabled-themes
-          (delq theme custom-enabled-themes))))
+         ;; Try to enable the theme
+         (let ((custom-known-themes (list theme 'user)))
+          (when (ignore-errors (load-theme theme) t)
+            (enable-theme theme)))
+         ;; HACK: remove the theme from the customization variable.  This
+         ;; should stay programmatic.
+         (setq custom-enabled-themes
+               (delq theme custom-enabled-themes))))
